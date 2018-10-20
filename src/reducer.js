@@ -7,12 +7,16 @@ export default function reducer(todos = init, action) {
         case 'ADD_TODO':
             return todos.push(Map(action.payload))
         case 'TOGGLE_TODO':
-            return todos.map(t => {
-                if (t.get('id') === action.payload) {
-                    return t.update('isDone', isDone => !isDone)
+            return todos.map(todo => {
+                if (todo.get('id') === action.payload) {
+                    return todo.update('isDone', isDone => !isDone)
                 } else {
-                    return t
+                    return todo
                 }
+            })
+        case 'DELETE_TODO':
+            return todos.filter((todo) => {
+                return todo.get('id') !== action.payload;
             })
         default:
             return todos

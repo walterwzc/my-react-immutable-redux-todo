@@ -11,7 +11,7 @@ export function Todo(props) {
 }
 
 export function TodoList(props) {
-    const { todos, toggleTodo, addTodo } = props
+    const { todos, toggleTodo, addTodo, deleteTodo } = props
 
     const onSubmit = event => {
         const input = event.target
@@ -47,16 +47,20 @@ export function TodoList(props) {
                 onKeyDown={onSubmit}
             />
             <ul className="todo__list">
-                {todos.map(t => (
+                {todos.map(todo => (
                     <li
-                        key={t.get('id')}
+                        key={todo.get('id')}
                         className="todo__item"
-                        onClick={toggleClick(t.get('id'))}>
+                        onClick={toggleClick(todo.get('id'))}>
                         {/* 因为自己总是按照如下的方式来进行书写，返回一个函数的执行，而不是返回一个函数的引用，所以没有明白上面的代码 */}
                         {/* onClick={() => {
-                            toggleClick(t.get('id'))
+                            toggleClick(todo.get('id'))
                         }} */}
-                        <Todo todo={t.toJS()} />
+                        <Todo todo={todo.toJS()} />
+                        <div 
+                            style={{float: "right"}}
+                            onClick={() => deleteTodo(todo.get('id'))}
+                        >X</div>
                     </li>
                 ))}
             </ul>
